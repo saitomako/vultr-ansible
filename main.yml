@@ -36,6 +36,12 @@
         dest: /etc/sudoers
         backup: yes
         line: 'makoto ALL=(ALL) NOPASSWD:ALL'
+    - name: install vim
+      yum: name=vim-enhanced state=latest
+    - name: copy vimrc for root
+      copy: src=vimrc.custom dest=/root/.vimrc backup=yes
+    - name: copy vimrc for makoto
+      copy: src=vimrc.custom dest=/home/makoto/.vimrc owner=makoto group=makoto backup=yes
     - name: copy httpd.conf
       copy: src=httpd.conf.custom dest=/etc/httpd/conf/httpd.conf backup=yes
       notify:

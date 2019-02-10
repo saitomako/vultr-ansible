@@ -15,3 +15,5 @@ tail -f /tmp/firstboot.log
 ```
 でスタートアップスクリプトの進行状況が確認できる。
 
+## 参考
+- https://github.com/dotinstallres/centos6
