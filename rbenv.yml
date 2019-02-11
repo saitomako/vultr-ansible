@@ -35,5 +35,5 @@
       failed_when: ruby_installed.rc not in [0, 1]
     - name: install ruby
       shell: /bin/bash -lc "rbenv install {{ruby_version}} && rbenv rehash && rbenv global {{ruby_version}}"
-      when: ruby_installed.rc == 2
+      when: ruby_installed.rc == 1
 
