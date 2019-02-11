@@ -81,7 +81,31 @@
       copy: src=my.cnf.custom dest=/etc/my.cnf backup=yes
     - name: start mysql and enabled
       service: name=mysqld state=started enabled=yes
-
+    - name: install ruby dependencies
+      yum: name={{item}} enablerepo=remi,epel state=present
+      with_items:
+        - gcc
+        - openssl
+        - openssl-devel
+        - rpm-build
+        - gcc-c++
+        - bzip2
+        - bzip2-devel
+        - libtool
+        - zlib
+        - zlib-devel
+        - http-devel
+        - openssl-devel
+        - curl-devel
+        - ncurses-devel
+        - gdbm-devel
+        - readline
+        - readline-devel
+        - sqlite
+        - sqlite-devel
+        - libyaml-devel
+        - libffi-devel
+        - bison
 
   handlers:
     - name: restart apache
