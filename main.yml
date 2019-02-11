@@ -31,7 +31,7 @@
       file: path=/home/makoto/.ssh state=directory owner=makoto group=makoto mode=0700
     - name: copy authorised_key
       copy: src=/root/.ssh/authorized_keys dest=/home/makoto/.ssh/authorized_keys owner=makoto group=makoto mode=0400
-    - name: grant makoto to suso
+    - name: grant makoto to sudo
       lineinfile:
         dest: /etc/sudoers
         backup: yes
@@ -63,9 +63,25 @@
         - php-xml
       notify:
         - restart apache
+    - name: copy php.ini.custom
+      copy: src=php.ini.custom dest=/etc/php.ini backup=yes
+        - restart apache
+
+    - name: install mysql repository
+      command: rpm -Uvh --force http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm
+    - name: install mysql
+      yum: name={{item}} state=present
+      with_items:
+        - mysql
+        - mysql-devel
+        - mysql-server
+        - mysql-utilities
+    - name: copy my.conf.custom
+      copy: src=my.cnf.custom dest=/etc/my.cnf backup=yes
+    - name: start mysql and enabled
+      service: name=mysqld state=started enabled=yes
 
 
   handlers:
     - name: restart apache
       service: name=httpd state=restarted
-
