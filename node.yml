@@ -1,0 +1,16 @@
+---
+- hosts: localhost
+  tasks:
+    - name: check node js installed
+      shell: /binbash -lc "node -v"
+      register: node_installed
+      failse_when: node_installed.rc not in [0, 1, 127]
+    - name: install node script
+      shell: /bin/bash -lc "curl -sL https://rpm.nodesource.com/setup | bash -"
+      when: node_installed.rc == 127
+    - name: install nodejs
+      yum: name=nodejs state=latest
+      when: node_installed.rc == 127
+    - name: install npm
+      yum: name=npm state=latest
+      when: node_installed.rc == 127
