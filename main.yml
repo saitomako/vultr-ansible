@@ -26,7 +26,7 @@
     - name: start apache and enabled
       service: name=httpd state=started enabled=yes
     - name: create user {{opuser}}
-      user: name={{opuser}} uid=1000
+      user: name={{opuser}} uid=1001
     - name: change owner /var/www/html
       file: dest=/var/www/html owner={{opuser}}group={{opuser}}recurse=yes
     - name: create {{opuser}}'s direcotry .ssh
