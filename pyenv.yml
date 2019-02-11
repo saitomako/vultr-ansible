@@ -8,8 +8,8 @@
     - name: check pyenv installed
       command: text -x /home/makoto/.pyenv
       register: pyenv_present
-      failed_when: pyenv_present.rc not in [0, 1]
+      failed_when: pyenv_present.rc not in [0, 2]
     - name: git clone pyenv
       git: repo=https://github.com/yyuu/pyenv.git dest=/home/makoto/.pyenv
-      when: pyenv_present.rc == 1
+      when: pyenv_present.rc == 2
 
