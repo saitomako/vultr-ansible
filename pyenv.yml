@@ -26,3 +26,11 @@
     - name: update pyenv-virtualenv
       command: git pull --rebase chdir=/home/makoto/.pyenv/plugins/pyenv-virtualenv
 
+    - name: check python installed
+      shell: /bin/bash -lc "pyenv versions | grep {{python_version}}"
+      register: python_installed
+      failed_when: python_installed.rc not in [0, 1]
+    - name: install python
+      shell: /bin/bash -lc "pyenv install {{python_version}} && pyenv rehash && pyenv global {{python_version}}"
+      when: python_installed.rc == 1
+
