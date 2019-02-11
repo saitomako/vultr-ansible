@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  become: yes
+  become_user: makoto
+  vars:
+    - python_version: 3.5.2
+  tasks:
+    - name: check pyenv installed
+      command: text -x /home/makoto/.pyenv
+      register: pyenv_present
+      failed_when: rbenv_present.rc not in [0, 1]
+    - name: git clone pyenv
+      git: repo=https://github.com/yyuu/pyenv.git dest=/home/makoto/.pyenv
+      when: pyenv_present.rc == 1
+
