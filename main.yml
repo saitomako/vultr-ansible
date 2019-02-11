@@ -1,7 +1,7 @@
 ---
 - hosts: localhost
   vars:
-    - opuser: vagrant
+    - opuser: makoto
   tasks:
     - name: disable iptables
       service: name=iptables state=stopped enabled=no
@@ -26,10 +26,10 @@
     - name: start apache and enabled
       service: name=httpd state=started enabled=yes
     - name: create user {{opuser}}
-      user: name={{opuser}} uid=1001
+      user: name={{opuser}} uid=1000
     - name: change owner /var/www/html
       file: dest=/var/www/html owner={{opuser}}group={{opuser}}recurse=yes
-    - name: create {{opuser}}'s direcotry .ssh
+    - name: create {{opuser}} direcotry .ssh
       file: path=/home/{{opuser}}/.ssh state=directory owner={{opuser}} group={{opuser}} mode=0700
     - name: copy authorised_key
       copy: src=/root/.ssh/authorized_keys dest=/home/{{opuser}}/.ssh/authorized_keys owner={{opuser}} group={{opuser}} mode=0400
