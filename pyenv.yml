@@ -21,4 +21,8 @@
       git: repo=https://github.com/yyuu/pyenv-virtualenv.git dest=/home/makoto/.pyenv/plugins/pyenv-virtualenv
       when: pyvirtual_present.rc == 2
 
+    - name: update pyenv
+      command: git pull --rebase chdir=/home/makoto/.pyenv
+    - name: update pyenv-virtualenv
+      command: git pull --rebase chdir=/home/makoto/.pyenv/plugins/pyenv-virtualenv
 
