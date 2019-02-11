@@ -6,3 +6,5 @@ git clone https://github.com/saitomako/vultr-ansible.git
 cd vultr-ansible
 ansible-playbook main.yml
 ansible-playbook rbenv.yml
+ansible-playbook pyenv.yml
+ansible-playbook node.yml
