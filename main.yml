@@ -94,7 +94,7 @@
         - libtool
         - zlib
         - zlib-devel
-        - http-devel
+        - httpd-devel
         - openssl-devel
         - curl-devel
         - ncurses-devel
