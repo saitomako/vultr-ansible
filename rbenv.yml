@@ -32,7 +32,7 @@
     - name: check ruby installed
       shell: /bin/bash -lc "rbenv versions | grep {{ruby_version}}"
       register: ruby_installed
-      failed_when: ruby_installed.rc not in [0, 2]
+      failed_when: ruby_installed.rc not in [0, 1]
     - name: install ruby
       shell: /bin/bash -lc "rbenv install {{ruby_version}} && rbenv rehash && rbenv global {{ruby_version}}"
       when: ruby_installed.rc == 2
