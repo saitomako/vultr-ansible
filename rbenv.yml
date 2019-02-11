@@ -27,7 +27,7 @@
     - name: update rbenv
       command: git pull --rebase chdir=/home/makoto/.rbenv
     - name: update ruby-build
-      command: git --rebase chdir=/home/makoto/.rbenv/plugins/ruby-build
+      command: git pull --rebase chdir=/home/makoto/.rbenv/plugins/ruby-build
 
     - name: check ruby installed
       shell: /bin/bash -lc "rbenv versions | grep {{ruby_version}}"
