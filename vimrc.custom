@@ -5,8 +5,8 @@ set number
 set list            " Show tab, end, trail empty
 set listchars=tab:>-,trail:-,extends:>,precedes:<,nbsp:% " Set words for above
 set backspace=indent,eol,start
-set directory=~/.vim/tmp
-set backupdir=~/.vim/tmp
+set directory=/tmp
+set backupdir=/tmp
 
 "colorscheme molokai
 colorscheme default
