@@ -28,7 +28,7 @@
     - name: create user {{opuser}}
       user: name={{opuser}} uid=1000
     - name: change owner /var/www/html
-      file: dest=/var/www/html owner={{opuser}}group={{opuser}}recurse=yes
+      file: dest=/var/www/html owner={{opuser}} group={{opuser}} recurse=yes
     - name: create {{opuser}} direcotry .ssh
       file: path=/home/{{opuser}}/.ssh state=directory owner={{opuser}} group={{opuser}} mode=0700
     - name: copy authorised_key
