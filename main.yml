@@ -65,6 +65,7 @@
         - restart apache
     - name: copy php.ini.custom
       copy: src=php.ini.custom dest=/etc/php.ini backup=yes
+      notify:
         - restart apache
 
     - name: install mysql repository
