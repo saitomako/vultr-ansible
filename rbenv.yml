@@ -1,0 +1,41 @@
+---
+- hosts: localhost
+  become: yes
+  become_user: makoto
+  vars:
+    - ruby_version: 2.3.1
+    - python_version: 3.5.2
+  tasks:
+    - name: check rbenv installed
+      command: text -x /home/makoto/.rbenv
+      register: rbenv_present
+      failed_when: rbenv_present.rc not in [0, 1]
+    - name: git clone rbenv
+      git: repo=https://github.com/sstephenson/rbenv.git dest=/home/makoto/.rbenv
+      when: rbenv_present.rc == 1
+    - name: update bash_profile
+      copy: src=bash_profile.custom dest=/home/makoto/.bash_profile backup=yes
+
+    - name: check ruby-build installed
+      command: text -x /home/makoto/.rbenv/plugins/ruby-build
+      register: rbuild_present
+      failed_when: rbuild_present.rc not in [0, 1]
+    - name: git clone ruby-build
+      git: repo=https://github.com/sstephenson/ruby-build.git dest=/home/makoto/.rbenv/plugins/ruby-build
+      when: rbuild_present.rc == 1
+
+    - name: update rbenv
+      command: git pull --rebase chdir=/home/makoto/.rbenv
+    - name: update ruby-build
+      command: git --rebase chdir=/home/makoto/.rbenv/plugins/ruby-build
+
+    - name: check ruby installed
+      shell: /bin/bash -lc "rbenv versions | grep {{ruby_version}}"
+      register: ruby_installed
+      failed_when: ruby_installed.rc not in [0, 1]
+    - name: install ruby
+      shell: /bin/bash -lc "rbenv install {{ruby_version}} && rbenv rehash && rbenv global {{ruby_version}}"
+      when: ruby_installed.rc == 1
+
+
+
