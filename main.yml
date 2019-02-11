@@ -1,5 +1,7 @@
 ---
 - hosts: localhost
+  vars:
+    - opuser: vagrant
   tasks:
     - name: disable iptables
       service: name=iptables state=stopped enabled=no
@@ -23,25 +25,25 @@
       yum: name=httpd state=latest
     - name: start apache and enabled
       service: name=httpd state=started enabled=yes
-    - name: create user makoto
-      user: name=makoto uid=1000
+    - name: create user {{opuser}}
+      user: name={{opuser}} uid=1000
     - name: change owner /var/www/html
-      file: dest=/var/www/html owner=makoto group=makoto recurse=yes
-    - name: create makoto's direcotry .ssh
-      file: path=/home/makoto/.ssh state=directory owner=makoto group=makoto mode=0700
+      file: dest=/var/www/html owner={{opuser}}group={{opuser}}recurse=yes
+    - name: create {{opuser}}'s direcotry .ssh
+      file: path=/home/{{opuser}}/.ssh state=directory owner={{opuser}} group={{opuser}} mode=0700
     - name: copy authorised_key
-      copy: src=/root/.ssh/authorized_keys dest=/home/makoto/.ssh/authorized_keys owner=makoto group=makoto mode=0400
-    - name: grant makoto to sudo
+      copy: src=/root/.ssh/authorized_keys dest=/home/{{opuser}}/.ssh/authorized_keys owner={{opuser}} group={{opuser}} mode=0400
+    - name: grant {{opuser}} to sudo
       lineinfile:
         dest: /etc/sudoers
         backup: yes
-        line: 'makoto ALL=(ALL) NOPASSWD:ALL'
+        line: "{{opuser}} ALL=(ALL) NOPASSWD:ALL"
     - name: install vim
       yum: name=vim-enhanced state=latest
     - name: copy vimrc for root
       copy: src=vimrc.custom dest=/root/.vimrc backup=yes
-    - name: copy vimrc for makoto
-      copy: src=vimrc.custom dest=/home/makoto/.vimrc owner=makoto group=makoto backup=yes
+    - name: copy vimrc for {{opuser}} 
+      copy: src=vimrc.custom dest=/home/{{opuser}}/.vimrc owner={{opuser}} group={{opuser}}  backup=yes
     - name: copy httpd.conf
       copy: src=httpd.conf.custom dest=/etc/httpd/conf/httpd.conf backup=yes
       notify:
